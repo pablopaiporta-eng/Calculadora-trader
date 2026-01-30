@@ -127,6 +127,25 @@ document.getElementById('calcular').addEventListener('click', () => {
   document.getElementById('slOut').textContent = riesgo€.toFixed(2);
   document.getElementById('error').textContent = '';
 });
+  <script>
+document.getElementById('calcular').addEventListener('click', function () {
+  const capital = parseFloat(document.getElementById('capital').value);
+  const riesgoPct = parseFloat(document.getElementById('riesgo').value);
+  const stopPct = parseFloat(document.getElementById('stop').value);
+
+  if (isNaN(capital) || isNaN(riesgoPct) || isNaN(stopPct) || stopPct === 0) {
+    document.getElementById('error').textContent = 'Datos inválidos';
+    return;
+  }
+
+  const riesgoE = capital * (riesgoPct / 100);
+  const posicion = riesgoE / (stopPct / 100);
+
+  document.getElementById('posicionOut').textContent = posicion.toFixed(2);
+  document.getElementById('riesgoOut').textContent = riesgoE.toFixed(2);
+  document.getElementById('slOut').textContent = riesgoE.toFixed(2);
+  document.getElementById('error').textContent = '';
+});
   </script>
 </body>
 </html>
