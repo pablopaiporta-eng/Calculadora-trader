@@ -108,5 +108,25 @@
 
   <!-- OJO: si tu JS se llama distinto, cámbialo aquí -->
   <script src="./script.js"></script>
+  <script>
+document.getElementById('calcular').addEventListener('click', () => {
+  const capital = parseFloat(document.getElementById('capital').value);
+  const riesgoPct = parseFloat(document.getElementById('riesgo').value);
+  const stopPct = parseFloat(document.getElementById('stop').value);
+
+  if (isNaN(capital) || isNaN(riesgoPct) || isNaN(stopPct) || capital<=0 || riesgoPct<=0 || stopPct<=0) {
+    document.getElementById('error').textContent = 'Datos inválidos';
+    return;
+  }
+
+  const riesgo€ = capital * (riesgoPct / 100);
+  const posicion = riesgo€ / (stopPct / 100);
+
+  document.getElementById('posicionOut').textContent = posicion.toFixed(2);
+  document.getElementById('riesgoOut').textContent = riesgo€.toFixed(2);
+  document.getElementById('slOut').textContent = riesgo€.toFixed(2);
+  document.getElementById('error').textContent = '';
+});
+  </script>
 </body>
 </html>
