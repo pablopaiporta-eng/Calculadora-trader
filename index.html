@@ -1,163 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Calculadora Trader</title>
+
+  <!-- OJO: debe llamarse EXACTO "style.css" (minúsculas) y estar en la misma carpeta -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
 
   <!-- HTML -->
+  <div class="app">
 
-<div class="app">
+    <header class="top">
+      <div class="brand">Calculadora Trader</div>
+      <div class="sub">Tamaño de posición · Riesgo · Valor del stop</div>
+    </header>
 
-  <header class="top">
+    <main class="card">
 
-    <div class="brand">Calculadora Trader</div>
+      <div id="intro" class="intro">
+        <div class="intro-inner">
+          <h2>Calculadora Trader</h2>
+          <p>Capital + Riesgo + Stop → tamaño de posición y pérdida al SL.</p>
+          <ul>
+            <li>1) Mete Capital (€)</li>
+            <li>2) Riesgo (%)</li>
+            <li>3) Stop (%)</li>
+          </ul>
+          <button id="entrar" type="button"
+            onclick="document.getElementById('intro').classList.add('closed')">Entrar</button>
+        </div>
+      </div>
 
-    <div class="sub">Tamaño de posición · Riesgo · Valor del stop</div>
+      <section class="inputs">
+        <div class="row">
+          <div class="left">
+            <div class="lbl">Account Balance</div>
+            <div class="hint">Capital (€)</div>
+          </div>
+          <div class="right">
+            <input id="capital" type="number" inputmode="decimal" placeholder="12000" step="any" min="0"/>
+            <span class="unit">€</span>
+          </div>
+        </div>
 
-  </header>
+        <div class="row">
+          <div class="left">
+            <div class="lbl">Risk Per Trade</div>
+            <div class="hint">Riesgo (%)</div>
+          </div>
+          <div class="right">
+            <input id="riesgo" type="number" inputmode="decimal" placeholder="2" step="any" min="0" max="5" />
+            <span class="unit">%</span>
+          </div>
+        </div>
 
-  <main class="card">
-    
-    <div id="intro" class="intro">
+        <div class="row">
+          <div class="left">
+            <div class="lbl">Stop Loss</div>
+            <div class="hint">Stop (%)</div>
+          </div>
+          <div class="right">
+            <input id="stop" type="number" inputmode="decimal" placeholder="1" step="any" min="0" max="99.99" />
+            <span class="unit">%</span>
+          </div>
+        </div>
 
-  <div class="intro-inner">
+        <button id="calcular" class="cta" type="button">CALCULAR</button>
+        <div id="error" class="error" aria-live="polite"></div>
+      </section>
 
-    <h2>Calculadora Trader</h2>
+      <section class="results">
+        <div class="resultCard neonBlue">
+          <div class="rLeft">
+            <div class="rTitle">POSITION SIZE</div>
+            <div class="rSub">Tamaño posición</div>
+          </div>
+          <div class="rValue"><span id="posicionOut">—</span><span class="rUnit">€</span></div>
+        </div>
 
-    <p>Capital + Riesgo + Stop → tamaño de posición y pérdida al SL.</p>
+        <div class="resultCard neonGreen">
+          <div class="rLeft">
+            <div class="rTitle">RISK AMOUNT</div>
+            <div class="rSub">Riesgo (€)</div>
+          </div>
+          <div class="rValue"><span id="riesgoOut">—</span><span class="rUnit">€</span></div>
+        </div>
 
-    <ul>
+        <div class="resultCard neonPink">
+          <div class="rLeft">
+            <div class="rTitle">STOP LOSS VALUE</div>
+            <div class="rSub">Pérdida al SL</div>
+          </div>
+          <div class="rValue"><span id="slOut">—</span><span class="rUnit">€</span></div>
+        </div>
+      </section>
 
-      <li>1) Mete Capital (€)</li>
+    </main>
 
-      <li>2) Riesgo (%)</li>
-
-      <li>3) Stop (%)</li>
-
-    </ul>
-
-    <button id="entrar" type="button" onclick="document.getElementById('intro').classList.add('closed')">Entrar</button>
+    <footer class="foot">
+      <span class="dot"></span> TRADER CALCULATOR
+    </footer>
 
   </div>
 
-</div>
-
-    <section class="inputs">
-
-      <div class="row">
-
-        <div class="left">
-
-          <div class="lbl">Account Balance</div>
-
-          <div class="hint">Capital (€)</div>
-
-        </div>
-
-        <div class="right">
-
-          <input id="capital" type="number" inputmode="decimal" placeholder="12000" step="any" min="0"/>
-
-          <span class="unit">€</span>
-
-        </div>
-
-      </div>
-
-      <div class="row">
-
-        <div class="left">
-
-          <div class="lbl">Risk Per Trade</div>
-
-          <div class="hint">Riesgo (%)</div>
-
-        </div>
-
-        <div class="right">
-
-          <input id="riesgo" type="number" inputmode="decimal" placeholder="2" step="any" min="0" max="5" />
-
-          <span class="unit">%</span>
-
-        </div>
-
-      </div>
-
-      <div class="row">
-
-        <div class="left">
-
-          <div class="lbl">Stop Loss</div>
-
-          <div class="hint">Stop (%)</div>
-
-        </div>
-
-        <div class="right">
-
-          <input id="stop" type="number" inputmode="decimal" placeholder="1" step="any" min="0" max="99.99" />
-
-          <span class="unit">%</span>
-
-        </div>
-
-      </div>
-
-      <button id="calcular" class="cta" type="button">CALCULAR</button>
-
-      <div id="error" class="error" aria-live="polite"></div>
-
-    </section>
-
-    <section class="results">
-
-      <div class="resultCard neonBlue">
-
-        <div class="rLeft">
-
-          <div class="rTitle">POSITION SIZE</div>
-
-          <div class="rSub">Tamaño posición</div>
-
-        </div>
-
-        <div class="rValue"><span id="posicionOut">—</span><span class="rUnit">€</span></div>
-
-      </div>
-
-      <div class="resultCard neonGreen">
-
-        <div class="rLeft">
-
-          <div class="rTitle">RISK AMOUNT</div>
-
-          <div class="rSub">Riesgo (€)</div>
-
-        </div>
-
-        <div class="rValue"><span id="riesgoOut">—</span><span class="rUnit">€</span></div>
-
-      </div>
-
-      <div class="resultCard neonPink">
-
-        <div class="rLeft">
-
-          <div class="rTitle">STOP LOSS VALUE</div>
-
-          <div class="rSub">Pérdida al SL</div>
-
-        </div>
-
-        <div class="rValue"><span id="slOut">—</span><span class="rUnit">€</span></div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <footer class="foot">
-
-    <span class="dot"></span> TRADER CALCULATOR
-
-  </footer>
-
-</div>
-  
+  <!-- OJO: si tu JS se llama distinto, cámbialo aquí -->
+  <script src="./script.js"></script>
+</body>
+</html>
