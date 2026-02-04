@@ -11,7 +11,10 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Build AAB with Bubblewrap
+      - name: Build AAB
         run: |
           npm install -g @bubblewrap/cli
-          yes | bubblewrap build --manifest=manifest.json
+          # Generamos la clave de seguridad automáticamente para que no pregunte
+          keytool -genkey -v -keystore android.keystore -alias android -keyalg RSA -keysize 2048 -validity 10000 -storepass password123 -keypass password123 -dname "CN=Pablo, OU=IT, O=Paiporta, L=V, S=V, C=ES"
+          # Construimos usando el archivo que creamos en el Paso 1
+          bubblewrap build --skipCheck --quiet
