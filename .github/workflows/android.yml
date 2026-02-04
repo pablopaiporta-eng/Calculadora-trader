@@ -5,16 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: set up JDK 11
-        uses: actions/setup-java@v3
+      - uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Build AAB
+      - name: Build
         run: |
           npm install -g @bubblewrap/cli
-          # Generamos la clave de seguridad automáticamente para que no pregunte
-          keytool -genkey -v -keystore android.keystore -alias android -keyalg RSA -keysize 2048 -validity 10000 -storepass password123 -keypass password123 -dname "CN=Pablo, OU=IT, O=Paiporta, L=V, S=V, C=ES"
-          # Construimos usando el archivo que creamos en el Paso 1
+          keytool -genkey -v -keystore android.keystore -alias android -keyalg RSA -keysize 2048 -validity 10000 -storepass password123 -keypass password123 -dname "CN=Pablo, O=Paiporta, C=ES"
           bubblewrap build --skipCheck --quiet
