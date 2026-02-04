@@ -1,0 +1,4 @@
+<widget id="com.pablopaiporta.calculadoratrader" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
+    <name>Calculadora Trader</name>
+    <content src="index.html" />
+</widget>
