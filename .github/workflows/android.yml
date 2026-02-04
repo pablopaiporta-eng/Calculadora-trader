@@ -1,4 +1,4 @@
-name: Build AAB
+name: Build Android AAB
 on: [push]
 jobs:
   build:
@@ -10,8 +10,13 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-      - name: Build AAB Bundle
-        run: |
-          npm install -g @bubblewrap/cli
-          # El comando 'yes' responde automáticamente a todas las preguntas
-          yes | bubblewrap build --manifest=manifest.json
+          cache: gradle
+
+      - name: Build with Gradle
+        run: chmod +x gradlew && ./gradlew bundleRelease
+
+      - name: Upload AAB
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-bundle
+          path: app/build/outputs/bundle/release/*.aab
