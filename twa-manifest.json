@@ -1,0 +1,25 @@
+{
+  "packageId": "com.pablopaiporta.calculadora",
+  "host": "pablopaiporta-eng.github.io",
+  "name": "Calculadora Trader",
+  "launcherName": "Calc Trader",
+  "display": "standalone",
+  "themeColor": "#000000",
+  "navigationColor": "#000000",
+  "backgroundColor": "#000000",
+  "startUrl": "/Calculadora-trader/",
+  "iconUrl": "https://pablopaiporta-eng.github.io/Calculadora-trader/icon.png",
+  "maskableIconUrl": "https://pablopaiporta-eng.github.io/Calculadora-trader/icon.png",
+  "appVersion": "1.0.0",
+  "webManifestUrl": "https://pablopaiporta-eng.github.io/Calculadora-trader/manifest.json",
+  "fallbackType": "customtabs",
+  "pwaDisplay": "standalone",
+  "shortName": "CalcTrader",
+  "fingerprints": [],
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "android"
+  }
+}
