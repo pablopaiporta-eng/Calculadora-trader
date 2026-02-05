@@ -46,12 +46,9 @@ const symbol = { EUR: "€", USD: "$", GBP: "£" }[monedaSelect.value] || "€";
 
     const stop = parseFloat(stopEl.value);
     const trailing = parseFloat(document.getElementById("trailing")?.value) || 0;
-    if (!Number.isFinite(capital) || !Number.isFinite(riesgo) || !Number.isFinite(stop)) {
-
-      errorEl.textContent = "Rellena los 3 campos.";
-
-      return;
-
+    if (!Number.isFinite(capital) || !Number.isFinite(riesgo) || !Number.isFinite(stop) || !Number.isFinite(trailing)) {
+  errorEl.textContent = "Rellena los 4 campos.";
+  return;
     }
 
     if (capital <= 0) {
