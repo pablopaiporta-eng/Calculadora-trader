@@ -93,7 +93,6 @@ slOut.textContent       = `${stopValue.toFixed(2)} ${symbol}`;
 
   });
 
-});
 // === ADD-ON: TP% + R:R + Win% necesario ===
 
 document.addEventListener("DOMContentLoaded", () => {
