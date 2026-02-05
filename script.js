@@ -1,7 +1,9 @@
 // JS
 window.onerror = (m, s, l, c, e) => { document.body.innerHTML = "<pre style='color:#fff;white-space:pre-wrap;padding:12px'>JS ERROR:\n" + m + "\n" + s + ":" + l + ":" + c + "\n" + (e?.stack||"") + "</pre>"; };
 document.addEventListener("DOMContentLoaded", () => {
-
+const monedaSelect = document.getElementById("moneda");
+  const symbolMap = { EUR: "€", USD: "$", GBP: "£" };
+const symbol = symbolMap[monedaSelect.value] || "€";
   const capitalEl = document.getElementById("capital");
 
   const riesgoEl = document.getElementById("riesgo");
@@ -82,11 +84,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const stopValue = riesgoEuros; // por definición: pérdida al SL = riesgo
 
-    posicionOut.textContent = fmt(posicion);
-
-    riesgoOut.textContent = fmt(riesgoEuros);
-
-    slOut.textContent = fmt(stopValue);
+    positionSizeEl.textContent = `${positionSize.toFixed(2)} ${symbol}`;
+riskAmountEl.textContent = `${riskAmount.toFixed(2)} ${symbol}`;
+stopLossValueEl.textContent = `${riskAmount.toFixed(2)} ${symbol}`;
   
     document.getElementById("entrar") && document.getElementById("entrar").addEventListener("click", () => document.getElementById("intro").classList.add("closed"));
 
