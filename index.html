@@ -58,9 +58,16 @@
 
         <div class="right">
 
-          <input id="capital" type="number" inputmode="decimal" placeholder="12000" step="any" min="0"/>
+          <div class="right">
+  <input id="capital" type="number" inputmode="decimal" placeholder="12000" step="any" min="0"/>
+  <select id="moneda">
+    <option value="EUR" selected>€ EUR</option>
+    <option value="USD">$ USD</option>
+    <option value="GBP">£ GBP</option>
+  </select>
+          </div>
 
-          <span class="unit">€</span>
+          <span class="unit" id="currencySymbol">€</span>
 
         </div>
 
@@ -165,6 +172,26 @@
     <span class="dot"></span> TRADER CALCULATOR
 
   </footer>
+  <script>
+  const moneda = document.getElementById("moneda");
+  const units = document.querySelectorAll(".unit");
+
+  const symbols = {
+    EUR: "€",
+    USD: "$",
+    GBP: "£",
+    CNY: "¥",
+    JPY: "¥"
+  };
+
+  function updateUnits() {
+    const s = symbols[moneda.value] || "€";
+    units.forEach(u => u.textContent = s);
+  }
+
+  moneda.addEventListener("change", updateUnits);
+  updateUnits();
+  </script>
 <script src="script.js"></script>
 </div>
 </body>
