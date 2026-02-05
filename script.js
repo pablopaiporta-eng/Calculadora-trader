@@ -84,9 +84,10 @@ const symbol = symbolMap[monedaSelect.value] || "€";
 
     const stopValue = riesgoEuros; // por definición: pérdida al SL = riesgo
 
-    posicionOut.textContent = `${posicion.toFixed(2)} ${symbol}`;
-riesgoOut.textContent   = `${riesgoEuros.toFixed(2)} ${symbol}`;
-slOut.textContent       = `${stopValue.toFixed(2)} ${symbol}`;
+    const symbol = symbolMap[monedaSelect.value] || "€";
+posicionOut.textContent = `${posicion.toFixed(2)} ${symbol}`;
+riesgoOut.textContent = `${riesgoEuros.toFixed(2)} ${symbol}`;
+slOut.textContent = `${stopValue.toFixed(2)} ${symbol}`;
   
     document.getElementById("entrar") && document.getElementById("entrar").addEventListener("click", () => document.getElementById("intro").classList.add("closed"));
 
