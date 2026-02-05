@@ -37,7 +37,7 @@ const symbol = symbolMap[monedaSelect.value] || "€";
     new Intl.NumberFormat("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
 
   btn.addEventListener("click", () => {
-
+const symbol = { EUR: "€", USD: "$", GBP: "£" }[monedaSelect.value] || "€";
     limpiarError();
 
     const capital = parseFloat(capitalEl.value);
