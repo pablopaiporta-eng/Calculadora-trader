@@ -45,7 +45,7 @@ const symbol = { EUR: "€", USD: "$", GBP: "£" }[monedaSelect.value] || "€";
     const riesgo = parseFloat(riesgoEl.value);
 
     const stop = parseFloat(stopEl.value);
-
+    const trailing = parseFloat(document.getElementById("trailing")?.value) || 0;
     if (!Number.isFinite(capital) || !Number.isFinite(riesgo) || !Number.isFinite(stop)) {
 
       errorEl.textContent = "Rellena los 3 campos.";
