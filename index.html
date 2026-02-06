@@ -1,169 +1,86 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trader Calculator PRO - Ultimate Edition</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Ajuste rápido para los selectores que se veían blancos */
-        select {
-            background: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            border: 1px solid #00d4ff;
-            border-radius: 5px;
-            padding: 5px;
-        }
-        .row-group {
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-        }
-    </style>
-</head>
-<body>
-<div class="app">
-    <header class="top">
-        <div class="brand">TRADER PRO</div>
-        <div class="sub">Gestión de Riesgo & Rendimiento Profesional</div>
-    </header>
-
-    <main class="card">
-        <section class="inputs">
-            <div class="row-group">
-                <div class="row">
-                    <div class="left"><div class="lbl">Capital & Moneda</div></div>
-                    <div class="right">
-                        <select id="moneda">
-                            <option value="EUR">€ EUR</option>
-                            <option value="USD">$ USD</option>
-                            <option value="GBP">£ GBP</option>
-                        </select>
-                        <input id="capital" type="number" placeholder="10000">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="left"><div class="lbl">Riesgo por Operación</div></div>
-                    <div class="right">
-                        <input id="riesgo" type="number" placeholder="1">
-                        <span class="unit">%</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row-group">
-                <div class="row">
-                    <div class="left"><div class="lbl">Stop Loss</div></div>
-                    <div class="right">
-                        <input id="stop" type="number" placeholder="2">
-                        <span class="unit">%</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="left"><div class="lbl">Trailing Stop</div></div>
-                    <div class="right">
-                        <input id="trailing" type="number" placeholder="1">
-                        <span class="unit">%</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row-group">
-                <div class="row">
-                    <div class="left"><div class="lbl">Take Profit (TP)</div></div>
-                    <div class="right">
-                        <input id="tp" type="number" placeholder="4">
-                        <span class="unit">%</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="left"><div class="lbl">Comisión Bróker</div></div>
-                    <div class="right">
-                        <input id="comision" type="number" placeholder="0.1" step="0.01">
-                        <span class="unit">%</span>
-                    </div>
-                </div>
-            </div>
-
-            <button id="calcular" class="cta">CALCULAR ANÁLISIS PRO</button>
-            <div id="error" class="error"></div>
-        </section>
-
-        <section class="results">
-            <div class="resultCard neonBlue">
-                <div class="rLeft"><div class="rTitle">POSITION & LEVERAGE</div><div class="rSub">Posición | Apalancamiento</div></div>
-                <div class="rValue"><span id="posicionOut">—</span><span class="sym">€</span> | x<span id="levOut">1</span></div>
-            </div>
-
-            <div class="resultCard neonGreen">
-                <div class="rLeft"><div class="rTitle">NET PROFIT (TP)</div><div class="rSub">Beneficio Neto (tras comisiones)</div></div>
-                <div class="rValue"><span id="profitOut">—</span><span class="sym">€</span></div>
-            </div>
-
-            <div class="resultCard neonPink">
-                <div class="rLeft"><div class="rTitle">RISK & RATIO</div><div class="rSub">Pérdida SL | Ratio R:R</div></div>
-                <div class="rValue"><span id="slOut">—</span><span class="sym">€</span> | <span id="rrOut">1:0</span></div>
-            </div>
-
-            <div class="resultCard neonBlue">
-                <div class="rLeft"><div class="rTitle">MIN. WIN RATE</div><div class="rSub">% de acierto para ser rentable</div></div>
-                <div class="rValue"><span id="winRateOut">—</span><span class="unit">%</span></div>
-            </div>
-        </section>
-    </main>
-
-    <script>
-        const btn = document.getElementById('calcular');
-        const monedaSelect = document.getElementById('moneda');
-        const symbols = { EUR: "€", USD: "$", GBP: "£" };
-
-        function calcularTodo() {
-            const capital = parseFloat(document.getElementById('capital').value) || 0;
-            const riesgoP = parseFloat(document.getElementById('riesgo').value) || 0;
-            const stopP = parseFloat(document.getElementById('stop').value) || 0;
-            const tpP = parseFloat(document.getElementById('tp').value) || 0;
-            const comisionP = parseFloat(document.getElementById('comision').value) || 0;
-            const sym = symbols[monedaSelect.value];
-
-            if (capital <= 0 || riesgoP <= 0 || stopP <= 0) {
-                document.getElementById('error').innerText = "Rellena Capital, Riesgo y Stop.";
-                return;
-            }
-
-            // 1. Cálculos de Riesgo y Posición
-            const riesgoDinero = capital * (riesgoP / 100);
-            const posicion = riesgoDinero / (stopP / 100);
-            const apalancamiento = posicion / capital;
-
-            // 2. Cálculos de TP y R:R
-            const beneficioBruto = posicion * (tpP / 100);
-            const comisionesTotal = (posicion * (comisionP / 100)) * 2; // Entrada y salida
-            const beneficioNeto = beneficioBruto - comisionesTotal;
-            const ratioRR = tpP / stopP;
-
-            // 3. Win Rate Mínimo (Fórmula: 1 / (1 + Ratio RR))
-            const minWinRate = (1 / (1 + ratioRR)) * 100;
-
-            // 4. Renderizar
-            const f = (n) => n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            
-            document.getElementById('posicionOut').innerText = f(posicion);
-            document.getElementById('levOut').innerText = apalancamiento.toFixed(1);
-            document.getElementById('profitOut').innerText = f(beneficioNeto);
-            document.getElementById('slOut').innerText = f(riesgoDinero + comisionesTotal); // SL + comisiones
-            document.getElementById('rrOut').innerText = `1:${ratioRR.toFixed(1)}`;
-            document.getElementById('winRateOut').innerText = minWinRate.toFixed(1);
-
-            document.querySelectorAll('.sym').forEach(el => el.innerText = sym);
-            document.getElementById('error').innerText = "";
-        }
-
-        btn.addEventListener('click', calcularTodo);
-        monedaSelect.addEventListener('change', () => {
-            document.querySelectorAll('.sym').forEach(el => el.innerText = symbols[monedaSelect.value]);
-        });
-    </script>
+<div class="btn-group" style="display: flex; gap: 10px; margin-top: 20px; width: 100%;">
+    <button id="reset" type="button" style="flex: 1; background: #222; color: #fff; border: 1px solid #444; border-radius: 12px; cursor: pointer; font-weight: bold; padding: 15px; font-size: 14px;">
+        RESET
+    </button>
+    <button id="calcular" class="cta" type="button" style="flex: 2; margin: 0; padding: 15px; font-size: 16px;">
+        CALCULAR ANÁLISIS PRO
+    </button>
 </div>
-</body>
-</html>
+
+<script>
+    const btnCalcular = document.getElementById('calcular');
+    const btnReset = document.getElementById('reset');
+    const errorDiv = document.getElementById('error');
+    const monedaSelect = document.getElementById('moneda');
+    const levOut = document.getElementById('levOut');
+    const symbols = { EUR: "€", USD: "$", GBP: "£" };
+
+    function mostrarError(msj) {
+        errorDiv.innerText = msj;
+        errorDiv.style.color = "#ff4d4d";
+        setTimeout(() => errorDiv.innerText = "", 5000);
+    }
+
+    function calcular() {
+        const capital = parseFloat(document.getElementById('capital').value);
+        const riesgoP = parseFloat(document.getElementById('riesgo').value);
+        const stopP = parseFloat(document.getElementById('stop').value);
+        const tpP = parseFloat(document.getElementById('tp').value) || 0;
+        const comisionP = parseFloat(document.getElementById('comision').value) || 0;
+        const sym = symbols[monedaSelect.value];
+
+        if (isNaN(capital) || capital <= 0) return mostrarError("Error: Capital inválido.");
+        if (isNaN(riesgoP) || riesgoP <= 0) return mostrarError("Error: Riesgo inválido.");
+        if (isNaN(stopP) || stopP <= 0) return mostrarError("Error: Stop Loss obligatorio.");
+
+        const riesgoDinero = capital * (riesgoP / 100);
+        const posicion = riesgoDinero / (stopP / 100);
+        const apalancamiento = posicion / capital;
+        const comisionesTotal = (posicion * (comisionP / 100)) * 2;
+        const beneficioNeto = (posicion * (tpP / 100)) - comisionesTotal;
+        const ratioRR = tpP / stopP;
+        const winRate = (1 / (1 + ratioRR)) * 100;
+        const breakEven = (comisionesTotal / posicion) * 100;
+
+        // Lógica de color de Apalancamiento
+        levOut.innerText = apalancamiento.toFixed(1);
+        if (apalancamiento <= 5) {
+            levOut.style.color = "#00ff88"; // Verde neón
+        } else if (apalancamiento <= 10) {
+            levOut.style.color = "#ffaa00"; // Naranja
+        } else {
+            levOut.style.color = "#ff4d4d"; // Rojo
+        }
+
+        const f = (n) => n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        
+        document.getElementById('posicionOut').innerText = f(posicion);
+        document.getElementById('profitOut').innerText = f(beneficioNeto);
+        document.getElementById('slOut').innerText = f(riesgoDinero + comisionesTotal);
+        document.getElementById('rrOut').innerText = `1:${ratioRR.toFixed(1)}`;
+        document.getElementById('winRateOut').innerText = isFinite(winRate) ? winRate.toFixed(1) + "%" : "0%";
+        
+        // El Break-even lo mostramos con 3 decimales para precisión
+        if(document.getElementById('beOut')) document.getElementById('beOut').innerText = breakEven.toFixed(3);
+        
+        document.querySelectorAll('.sym').forEach(el => el.innerText = sym);
+    }
+
+    btnReset.addEventListener('click', () => {
+        document.querySelectorAll('input').forEach(input => input.value = "");
+        document.getElementById('posicionOut').innerText = "—";
+        levOut.innerText = "0";
+        levOut.style.color = "white";
+        document.getElementById('profitOut').innerText = "—";
+        document.getElementById('slOut').innerText = "—";
+        document.getElementById('rrOut').innerText = "1:0";
+        document.getElementById('winRateOut').innerText = "—%";
+        if(document.getElementById('beOut')) document.getElementById('beOut').innerText = "0";
+        errorDiv.innerText = "";
+    });
+
+    btnCalcular.addEventListener('click', calcular);
+    monedaSelect.addEventListener('change', () => {
+        document.querySelectorAll('.sym').forEach(el => el.innerText = symbols[monedaSelect.value]);
+    });
+</script>
