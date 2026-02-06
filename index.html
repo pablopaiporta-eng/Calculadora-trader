@@ -1,214 +1,178 @@
-<!-- HTML -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora Trader</title>
+  <title>Calculadora Trader PRO</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="app">
 
   <header class="top">
-
     <div class="brand">Calculadora Trader</div>
-
-    <div class="sub">Tamaño de posición · Riesgo · Valor del stop</div>
-
+    <div class="sub">Tamaño de posición · Riesgo · Trailing</div>
   </header>
 
   <main class="card">
-    
     <div id="intro" class="intro">
-
-  <div class="intro-inner">
-
-    <h2>Calculadora Trader</h2>
-
-    <p>Capital + Riesgo + Stop → tamaño de posición y pérdida al SL.</p>
-
-    <ul>
-
-      <li>1) Mete Capital (€)</li>
-
-      <li>2) Riesgo (%)</li>
-
-      <li>3) Stop (%)</li>
-     
-      <li>4) trailing stop (%)</li>
-    </ul>
-
-    <button id="entrar" type="button" onclick="document.getElementById('intro').classList.add('closed')">Entrar</button>
-
-  </div>
-
-</div>
+      <div class="intro-inner">
+        <h2>Calculadora Trader</h2>
+        <p>Configura tu capital y riesgo para operar con seguridad.</p>
+        <ul>
+          <li>1) Selecciona tu Moneda</li>
+          <li>2) Indica Capital y Riesgo %</li>
+          <li>3) Establece tu Stop y Trailing %</li>
+        </ul>
+        <button id="entrar" type="button" onclick="document.getElementById('intro').classList.add('closed')">Entrar</button>
+      </div>
+    </div>
 
     <section class="inputs">
-
       <div class="row">
-
         <div class="left">
-
           <div class="lbl">Account Balance</div>
-
-          <div class="hint">Capital (€)</div>
-
+          <div class="hint">Capital</div>
         </div>
-
         <div class="right">
-
-          <div class="right">
-  <input id="capital" type="number" inputmode="decimal" placeholder="12000" step="any" min="0"/>
-  <select id="moneda">
-    <option value="EUR" selected>€ EUR</option>
-    <option value="USD">$ USD</option>
-    <option value="GBP">£ GBP</option>
-  </select>
-          </div>
-
-          <span class="unit" id="currencySymbol">€</span>
-
+          <select id="moneda" style="margin-right: 5px;">
+            <option value="EUR">€ EUR</option>
+            <option value="USD">$ USD</option>
+            <option value="GBP">£ GBP</option>
+          </select>
+          <input id="capital" type="number" inputmode="decimal" placeholder="10000" step="any">
         </div>
-
       </div>
 
       <div class="row">
-
         <div class="left">
-
           <div class="lbl">Risk Per Trade</div>
-
           <div class="hint">Riesgo (%)</div>
-
         </div>
-
         <div class="right">
-
-          <input id="riesgo" type="number" inputmode="decimal" placeholder="2" step="any" min="0" max="5" />
-
+          <input id="riesgo" type="number" inputmode="decimal" placeholder="1" step="any">
           <span class="unit">%</span>
-
         </div>
-
       </div>
 
       <div class="row">
-
         <div class="left">
-
           <div class="lbl">Stop Loss</div>
-
           <div class="hint">Stop (%)</div>
-
         </div>
-
         <div class="right">
-
-          <input id="stop" type="number" inputmode="decimal" placeholder="1" step="any" min="0" max="99.99" />
-
+          <input id="stop" type="number" inputmode="decimal" placeholder="1" step="any">
           <span class="unit">%</span>
-
         </div>
-
       </div>
-<div class="row">
-  <div class="left">
-    <div class="lbl">Trailing Stop</div>
-    <div class="hint">Trailing (%)</div>
-  </div>
-  <div class="right">
-    <input id="trailing" type="number" inputmode="decimal" placeholder="0">
-    <span class="unit">%</span>
-  </div>
-</div>
-      <button id="calcular" class="cta" type="button">CALCULAR</button>
 
-      <div id="error" class="error" aria-live="polite"></div>
+      <div class="row">
+        <div class="left">
+          <div class="lbl">Trailing Stop</div>
+          <div class="hint">Trailing (%)</div>
+        </div>
+        <div class="right">
+          <input id="trailing" type="number" inputmode="decimal" placeholder="0.5" step="any">
+          <span class="unit">%</span>
+        </div>
+      </div>
 
+      <button id="calcular" class="cta" type="button">CALCULAR AHORA</button>
+      <div id="error" class="error" style="color: #ff4d4d; margin-top: 10px; font-weight: bold;"></div>
     </section>
 
     <section class="results">
-
       <div class="resultCard neonBlue">
-
         <div class="rLeft">
-
           <div class="rTitle">POSITION SIZE</div>
-
           <div class="rSub">Tamaño posición</div>
-
         </div>
-
-        <div class="rValue"><span id="posicionOut">—</span><span class="rUnit">€</span></div>
-
+        <div class="rValue"><span id="posicionOut">—</span><span class="sym">€</span></div>
       </div>
 
       <div class="resultCard neonGreen">
-
         <div class="rLeft">
-
           <div class="rTitle">RISK AMOUNT</div>
-
-          <div class="rSub">Riesgo (€)</div>
-
+          <div class="rSub">Riesgo Total</div>
         </div>
-
-        <div class="rValue"><span id="riesgoOut">—</span><span class="rUnit">€</span></div>
-
+        <div class="rValue"><span id="riesgoOut">—</span><span class="sym">€</span></div>
       </div>
 
       <div class="resultCard neonPink">
-
         <div class="rLeft">
-
           <div class="rTitle">STOP LOSS VALUE</div>
-
           <div class="rSub">Pérdida al SL</div>
-
         </div>
-
-        <div class="rValue"><span id="slOut">—</span><span class="rUnit">€</span></div>
-
+        <div class="rValue"><span id="slOut">—</span><span class="sym">€</span></div>
       </div>
-<div class="resultCard neonBlue">
-  <div class="rLeft">
-    <div class="rTitle">TRAILING STOP</div>
-    <div class="rSub">Valor trailing</div>
-  </div>
-  <div class="rValue"><span id="tsOut">—</span><span class="rUnit">€</span></div>
-</div>
-    </section>
 
+      <div class="resultCard neonBlue">
+        <div class="rLeft">
+          <div class="rTitle">TRAILING VALUE</div>
+          <div class="rSub">Valor Trailing</div>
+        </div>
+        <div class="rValue"><span id="tsOut">—</span><span class="sym">€</span></div>
+      </div>
+    </section>
   </main>
 
   <footer class="foot">
-
-    <span class="dot"></span> TRADER CALCULATOR
-
+    <span class="dot"></span> TRADER CALCULATOR PRO
   </footer>
+
   <script>
-  const moneda = document.getElementById("moneda");
-  const units = document.querySelectorAll(".unit");
+    // --- LÓGICA DE LA CALCULADORA ---
+    const btnCalcular = document.getElementById('calcular');
+    const monedaSelect = document.getElementById('moneda');
+    
+    const symbols = { EUR: "€", USD: "$", GBP: "£" };
 
-  const symbols = {
-    EUR: "€",
-    USD: "$",
-    GBP: "£",
-    CNY: "¥",
-    JPY: "¥"
-  };
+    function realizarCalculos() {
+      // 1. Obtener valores
+      const capital = parseFloat(document.getElementById('capital').value);
+      const riesgoPorc = parseFloat(document.getElementById('riesgo').value);
+      const stopPorc = parseFloat(document.getElementById('stop').value);
+      const trailingPorc = parseFloat(document.getElementById('trailing').value) || 0;
+      const errorDiv = document.getElementById('error');
 
-  function updateUnits() {
-    const s = symbols[moneda.value] || "€";
-    units.forEach(u => u.textContent = s);
-  }
+      // Limpiar errores
+      errorDiv.innerText = "";
 
-  moneda.addEventListener("change", updateUnits);
-  updateUnits();
+      // 2. Validación simple
+      if (isNaN(capital) || isNaN(riesgoPorc) || isNaN(stopPorc)) {
+        errorDiv.innerText = "Por favor, rellena los campos básicos.";
+        return;
+      }
+
+      // 3. Cálculos
+      // Riesgo en dinero = Capital * (Riesgo% / 100)
+      const riesgoDinero = capital * (riesgoPorc / 100);
+      
+      // Tamaño de posición = Riesgo en dinero / (Stop% / 100)
+      const posicion = riesgoDinero / (stopPorc / 100);
+      
+      // Valor del Trailing = Posición * (Trailing% / 100)
+      const trailingDinero = posicion * (trailingPorc / 100);
+
+      // 4. Mostrar Resultados
+      document.getElementById('posicionOut').innerText = posicion.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      document.getElementById('riesgoOut').innerText = riesgoDinero.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      document.getElementById('slOut').innerText = riesgoDinero.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      document.getElementById('tsOut').innerText = trailingDinero.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+      // 5. Actualizar Símbolos de Moneda
+      const sym = symbols[monedaSelect.value];
+      document.querySelectorAll('.sym').forEach(el => el.innerText = sym);
+    }
+
+    // Eventos
+    btnCalcular.addEventListener('click', realizarCalculos);
+    monedaSelect.addEventListener('change', () => {
+      const sym = symbols[monedaSelect.value];
+      document.querySelectorAll('.sym').forEach(el => el.innerText = sym);
+    });
   </script>
-<script src="script.js"></script>
+
 </div>
 </body>
 </html>
