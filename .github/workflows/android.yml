@@ -14,4 +14,4 @@ jobs:
         run: |
           npm install -g @bubblewrap/cli
           keytool -genkey -v -keystore android.keystore -alias android -keyalg RSA -keysize 2048 -validity 10000 -storepass password123 -keypass password123 -dname "CN=Pablo, O=Paiporta, C=ES"
-          bubblewrap build --skipCheck --quiet
+          YES | bubblewrap build --skipCheck
