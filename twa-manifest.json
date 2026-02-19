@@ -1,25 +1,29 @@
 {
-  "packageId": "com.pablopaiporta.calculadora",
-  "host": "pablopaiporta-eng.github.io",
   "name": "Calculadora Trader",
-  "launcherName": "Calc Trader",
+  "short_name": "Calc Trader",
+  "start_url": "/Calculadora-trader/",
+  "scope": "/Calculadora-trader/",
   "display": "standalone",
-  "themeColor": "#000000",
-  "navigationColor": "#000000",
-  "backgroundColor": "#000000",
-  "startUrl": "/Calculadora-trader/",
-  "iconUrl": "https://pablopaiporta-eng.github.io/Calculadora-trader/icon.png",
-  "maskableIconUrl": "https://pablopaiporta-eng.github.io/Calculadora-trader/icon.png",
-  "appVersion": "1.0.0",
-  "webManifestUrl": "https://pablopaiporta-eng.github.io/Calculadora-trader/manifest.json",
-  "fallbackType": "customtabs",
-  "pwaDisplay": "standalone",
-  "shortName": "CalcTrader",
-  "fingerprints": [],
-  "shortcuts": [],
-  "generatorApp": "bubblewrap-cli",
-  "signingKey": {
-    "path": "./android.keystore",
-    "alias": "android"
-  }
+  "background_color": "#050a15",
+  "theme_color": "#050a15",
+  "icons": [
+    {
+      "src": "/Calculadora-trader/192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Calculadora-trader/512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Calculadora-trader/512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }
