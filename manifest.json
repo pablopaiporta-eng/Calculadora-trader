@@ -1,6 +1,7 @@
 {
   "name": "Trader Pro",
   "short_name": "Trader Pro",
+  "description": "Calculadora de riesgo y tamaño para trading profesional",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#050a15",
