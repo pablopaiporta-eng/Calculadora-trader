@@ -21,7 +21,7 @@ jobs:
         run: npm install -g @bubblewrap/cli
 
       - name: Build AAB
-        run: echo "y" | bubblewrap build --skipPwaValidation --skipPackageIdValidation --acceptAllLicenses --quiet
+        run: yes | bubblewrap build --skipPwaValidation --skipPackageIdValidation --acceptAllLicenses
         env:
           ANDROID_KEYSTORE_PASSWORD: budeta
           ANDROID_KEY_PASSWORD: budeta
