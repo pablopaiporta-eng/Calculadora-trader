@@ -2,13 +2,10 @@ name: Build AAB
 
 on:
   push:
-    branches:
-      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
@@ -21,7 +18,7 @@ jobs:
         run: npm install -g @bubblewrap/cli
 
       - name: Build AAB
-        run: yes | bubblewrap build --skipPwaValidation --skipPackageIdValidation --acceptAllLicenses
+        run: yes | bubblewrap build --skipPwaValidation --skipPackageIdValidation --acceptAllLicenses --jdkDownload
         env:
           ANDROID_KEYSTORE_PASSWORD: budeta
           ANDROID_KEY_PASSWORD: budeta
