@@ -112,7 +112,8 @@
         const com = parseFloat(document.getElementById('comision').value) || 0;
         const sym = symbols[moneda.value];
 
-        if (!cap || !rie || !sto) { document.getElementById('error').innerText = "Faltan datos obligatorios"; return; }
+        if (!cap || !rie || !sto) { document.getElementById('error').innerText = "Faltan datos obligatorios"; return;
+        }
         document.getElementById('error').innerText = "";
 
         const rD = cap * (rie/100);
