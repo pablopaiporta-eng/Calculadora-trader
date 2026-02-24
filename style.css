@@ -221,7 +221,7 @@ transform-style: preserve-3d;
   align-items:center;
 
   justify-content:space-between;
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
   gap:14px;
 
   padding:14px 14px;
