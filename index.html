@@ -45,15 +45,11 @@
                 </div>
             </div>
             <div class="row"><div class="lbl">Riesgo (%)</div><input id="riesgo" type="number" placeholder="1"></div>
-        
+        </div>
         <div class="row-group">
             <div class="row"><div class="lbl">Stop Loss (%)</div><input id="stop" type="number" placeholder="2"></div>
             <div class="row"><div class="lbl">Take Profit (%)</div><input id="tp" type="number" placeholder="4"></div>
-            <div class="row">
-         <div class="lbl">Comisión (%)</div>
-<input id="comision" type="number" placeholder="0.1" step="0.01" style="width:70px;">
-<div class="lbl" style="margin-left:20px;">Leverage (x)</div>
-<input id="levInput" type="number" min="1" max="125" step="1" value="1" style="width:70px;">
+            <div class="row"><div class="lbl">Comisión (%)</div><input id="comision" type="number" placeholder="0.1" step="0.01"></div>
         </div>
         <div class="btn-group">
             <button id="reset" class="btn-reset">RESET</button>
@@ -112,18 +108,12 @@
         const com = parseFloat(document.getElementById('comision').value) || 0;
         const sym = symbols[moneda.value];
 
-        if (!cap || !rie || !sto) { document.getElementById('error').innerText = "Faltan datos obligatorios"; return;
-        }
+        if (!cap || !rie || !sto) { document.getElementById('error').innerText = "Faltan datos obligatorios"; return; }
         document.getElementById('error').innerText = "";
 
         const rD = cap * (rie/100);
         const pos = rD / (sto/100);
         const lev = pos / cap;
-        const levUser = parseFloat(document.getElementById('levInput').value) || 1;
-        if (lev > levUser) {
-  document.getElementById('error').innerText = "Leverage limit exceeded";
-  return;
-}
         const comT = (pos * (com/100)) * 2;
         const netP = (pos * (tpp/100)) - comT;
 
@@ -135,28 +125,11 @@
         document.getElementById('winRateOut').innerText = ((1/(1+(tpp/sto)))*100).toFixed(1);
         
         const lO = document.getElementById('levOut');
-lO.innerText = lev.toFixed(1);
-
-let riskScore = 0;
-
-if (lev > 3) riskScore++;
-if (lev > 5) riskScore++;
-
-if (rie > 2) riskScore++;
-if (rie > 5) riskScore++;
-
-if (sto < 0.5) riskScore++; // stop muy pequeño = volátil
-
-if (riskScore <= 1) {
-    lO.style.color = "#00ff88"; // Verde
-} else if (riskScore <= 3) {
-    lO.style.color = "#ffaa00"; // Amarillo
-} else {
-    lO.style.color = "#ff0000"; // Rojo
-}
-
-document.querySelectorAll('.sym').forEach(s => s.innerText = sym);
+        lO.innerText = lev.toFixed(1);
+        lO.style.color = lev > 10 ? "#ff4d4d" : (lev > 5 ? "#ffaa00" : "#00ff88");
+        document.querySelectorAll('.sym').forEach(s => s.innerText = sym);
     }
+
     reset.addEventListener('click', () => {
         document.querySelectorAll('input').forEach(i => i.value = "");
         document.querySelectorAll('.rValue span:first-child').forEach(s => s.innerText = "—");
