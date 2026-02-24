@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="row"><div class="lbl">Riesgo (%)</div><input id="riesgo" type="number" placeholder="1"></div>
-        </div>
+        
         <div class="row-group">
             <div class="row"><div class="lbl">Stop Loss (%)</div><input id="stop" type="number" placeholder="2"></div>
             <div class="row"><div class="lbl">Take Profit (%)</div><input id="tp" type="number" placeholder="4"></div>
@@ -117,8 +117,9 @@
         const pos = rD / (sto/100);
         const lev = pos / cap;
         const levUser = parseFloat(document.getElementById('levInput').value) || 1;
-if (lev > levUser) {
+        if (lev > levUser) {
   document.getElementById('error').innerText = "Leverage limit exceeded";
+  return;
 }
         const comT = (pos * (com/100)) * 2;
         const netP = (pos * (tpp/100)) - comT;
