@@ -125,10 +125,27 @@
         document.getElementById('winRateOut').innerText = ((1/(1+(tpp/sto)))*100).toFixed(1);
         
         const lO = document.getElementById('levOut');
-        lO.innerText = lev.toFixed(1);
-        lO.style.color = lev > 10 ? "#ff4d4d" : (lev > 5 ? "#ffaa00" : "#00ff88");
-        document.querySelectorAll('.sym').forEach(s => s.innerText = sym);
-    }
+lO.innerText = lev.toFixed(1);
+
+let riskScore = 0;
+
+if (lev > 3) riskScore++;
+if (lev > 5) riskScore++;
+
+if (rie > 2) riskScore++;
+if (rie > 5) riskScore++;
+
+if (sto < 0.5) riskScore++; // stop muy pequeño = volátil
+
+if (riskScore <= 1) {
+    lO.style.color = "#00ff88"; // Verde
+} else if (riskScore <= 3) {
+    lO.style.color = "#ffaa00"; // Amarillo
+} else {
+    lO.style.color = "#ff0000"; // Rojo
+}
+
+document.querySelectorAll('.sym').forEach(s => s.innerText = sym);
 
     reset.addEventListener('click', () => {
         document.querySelectorAll('input').forEach(i => i.value = "");
