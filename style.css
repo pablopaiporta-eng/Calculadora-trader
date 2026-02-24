@@ -220,8 +220,8 @@ transform-style: preserve-3d;
 
   align-items:center;
 
-  justify-content:flex-start;
-
+  justify-content:space-between;
+  flex-wrap:wrap;
   gap:14px;
 
   padding:14px 14px;
