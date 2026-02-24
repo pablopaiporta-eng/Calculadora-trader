@@ -220,7 +220,7 @@ transform-style: preserve-3d;
 
   align-items:center;
 
-  justify-content:space-between;
+  justify-content:flex-start;
 
   gap:14px;
 
